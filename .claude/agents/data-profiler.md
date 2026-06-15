@@ -1,14 +1,18 @@
 ---
 name: data-profiler
 description: >-
-  Use this agent to profile a single dataset or CSV file and return a
-  standardized data profile. It reports row/column counts, a column summary
-  (types, missing, unique, examples), numeric ranges, categorical/status
-  breakdowns, and data-quality notes. Invoke it when the user wants to
-  "profile", "summarize the structure of", "describe", or "analyze the columns
-  of" a dataset, or as the profiling step of a larger documentation pipeline.
-  Examples: "Profile orders.csv", "What's the column breakdown of this data?",
-  "Give me a profile of the customers dataset". It returns the profile as text —
+  Use this agent to profile a single dataset — either a CSV file or a table in
+  the project's `datadesk-sqlite` SQLite database — and return a standardized
+  data profile. When the data is in the database it queries the table with SQL
+  via MCP to compute every figure; for a CSV that isn't loaded it computes from
+  the file instead. It reports row/column counts, a column summary (types,
+  missing, unique, examples), numeric ranges, categorical/status breakdowns, and
+  data-quality notes. Invoke it when the user wants to "profile", "summarize the
+  structure of", "describe", or "analyze the columns of" a dataset or table, or
+  as the profiling step of a larger documentation pipeline. Examples: "Profile
+  orders.csv", "Profile the orders table in the database", "What's the column
+  breakdown of this data?", "Give me a profile of the customers dataset". It
+  returns the profile as text —
   it does NOT write files or define business metrics (use metric-writer for
   metrics, data-documenter to produce a saved document).
 tools: Read, Bash, Skill, Glob, mcp__datadesk-sqlite__read_query, mcp__datadesk-sqlite__list_tables, mcp__datadesk-sqlite__describe_table
