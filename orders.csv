@@ -1,0 +1,61 @@
+order_id,order_date,customer_id,product_category,quantity,unit_price,discount_pct,country,order_status
+ORD-10001,2024-01-03,CUST-2847,Electronics,1,299.99,10,United States,completed
+ORD-10002,2024-01-05,CUST-1923,Clothing,3,49.95,0,Canada,completed
+ORD-10003,2024-01-07,CUST-3651,Home & Garden,2,89.00,15,United Kingdom,completed
+ORD-10004,2024-01-08,CUST-0472,Electronics,1,149.99,5,Germany,refunded
+ORD-10005,2024-01-10,CUST-2847,Books,4,24.99,0,United States,completed
+ORD-10006,2024-01-12,CUST-5528,Sports & Outdoors,1,175.00,20,Australia,completed
+ORD-10007,2024-01-14,CUST-1104,Beauty,2,65.50,0,France,cancelled
+ORD-10008,2024-01-15,CUST-3892,Clothing,1,129.00,10,United States,completed
+ORD-10009,2024-01-17,CUST-0765,Electronics,2,59.99,0,Canada,completed
+ORD-10010,2024-01-19,CUST-4421,Home & Garden,1,249.99,25,United States,completed
+ORD-10011,2024-01-21,CUST-2156,Toys & Games,3,34.99,0,Netherlands,completed
+ORD-10012,2024-01-22,CUST-1923,Food & Grocery,5,12.99,0,Canada,completed
+ORD-10013,2024-01-24,CUST-6783,Electronics,1,899.00,15,Japan,completed
+ORD-10014,2024-01-26,CUST-0329,Clothing,2,79.50,10,United Kingdom,refunded
+ORD-10015,2024-01-28,CUST-5528,Books,1,19.99,0,Australia,completed
+ORD-10016,2024-01-30,CUST-7745,Sports & Outdoors,2,45.00,5,Brazil,cancelled
+ORD-10017,2024-02-01,CUST-3651,Beauty,1,89.99,0,United Kingdom,completed
+ORD-10018,2024-02-03,CUST-8912,Electronics,1,549.00,10,United States,completed
+ORD-10019,2024-02-05,CUST-2456,Home & Garden,4,29.99,0,Germany,completed
+ORD-10020,2024-02-07,CUST-1104,Clothing,1,199.00,20,France,completed
+ORD-10021,2024-02-09,CUST-4421,Toys & Games,2,54.99,0,United States,refunded
+ORD-10022,2024-02-11,CUST-0983,Food & Grocery,3,8.49,0,Spain,completed
+ORD-10023,2024-02-13,CUST-6127,Electronics,1,1299.00,5,United States,completed
+ORD-10024,2024-02-15,CUST-3892,Sports & Outdoors,1,229.99,15,United States,completed
+ORD-10025,2024-02-17,CUST-5528,Clothing,4,39.99,10,Australia,completed
+ORD-10026,2024-02-19,CUST-2847,Beauty,2,42.00,0,United States,cancelled
+ORD-10027,2024-02-21,CUST-7301,Books,6,14.99,25,India,completed
+ORD-10028,2024-02-23,CUST-0472,Home & Garden,1,159.00,0,Germany,completed
+ORD-10029,2024-02-25,CUST-9654,Electronics,1,79.99,0,Mexico,completed
+ORD-10030,2024-02-27,CUST-1923,Toys & Games,1,69.99,10,Canada,completed
+ORD-10031,2024-03-01,CUST-4087,Clothing,2,89.00,5,Italy,refunded
+ORD-10032,2024-03-03,CUST-6783,Food & Grocery,8,6.99,0,Japan,completed
+ORD-10033,2024-03-05,CUST-2156,Sports & Outdoors,1,349.00,20,Netherlands,completed
+ORD-10034,2024-03-07,CUST-8912,Beauty,3,55.00,0,United States,completed
+ORD-10035,2024-03-09,CUST-0329,Electronics,2,199.99,15,United Kingdom,completed
+ORD-10036,2024-03-11,CUST-5219,Books,2,29.99,0,Sweden,cancelled
+ORD-10037,2024-03-13,CUST-3651,Home & Garden,1,399.00,10,United Kingdom,completed
+ORD-10038,2024-03-15,CUST-7745,Clothing,1,149.99,0,Brazil,completed
+ORD-10039,2024-03-17,CUST-1104,Toys & Games,4,22.99,5,France,completed
+ORD-10040,2024-03-19,CUST-4421,Electronics,1,449.00,10,United States,refunded
+ORD-10041,2024-03-21,CUST-9876,Food & Grocery,2,18.99,0,South Korea,completed
+ORD-10042,2024-03-23,CUST-2847,Sports & Outdoors,1,89.99,0,United States,completed
+ORD-10043,2024-03-25,CUST-0983,Beauty,1,120.00,15,Spain,completed
+ORD-10044,2024-03-27,CUST-6127,Clothing,3,59.99,10,United States,completed
+ORD-10045,2024-03-29,CUST-3892,Books,1,34.99,0,United States,cancelled
+ORD-10046,2024-03-31,CUST-8234,Electronics,1,699.00,5,Singapore,completed
+ORD-10047,2024-04-02,CUST-5528,Home & Garden,2,74.99,0,Australia,completed
+ORD-10048,2024-04-04,CUST-1923,Toys & Games,1,99.99,20,Canada,completed
+ORD-10049,2024-04-06,CUST-7301,Clothing,2,109.00,0,India,refunded
+ORD-10050,2024-04-08,CUST-0472,Food & Grocery,4,15.49,10,Germany,completed
+ORD-10051,2024-04-10,CUST-4087,Sports & Outdoors,1,199.00,0,Italy,completed
+ORD-10052,2024-04-12,CUST-2456,Beauty,2,78.00,5,Germany,completed
+ORD-10053,2024-04-14,CUST-9654,Electronics,1,249.99,15,Mexico,cancelled
+ORD-10054,2024-04-16,CUST-6783,Books,3,21.99,0,Japan,completed
+ORD-10055,2024-04-18,CUST-3651,Home & Garden,1,549.00,10,United Kingdom,completed
+ORD-10056,2024-04-20,CUST-5219,Clothing,1,179.00,0,Sweden,completed
+ORD-10057,2024-04-22,CUST-8912,Toys & Games,2,44.99,5,United States,refunded
+ORD-10058,2024-04-24,CUST-1104,Food & Grocery,6,9.99,0,France,completed
+ORD-10059,2024-04-26,CUST-7745,Electronics,1,129.00,10,Brazil,completed
+ORD-10060,2024-04-28,CUST-2847,Sports & Outdoors,3,65.00,15,United States,completed
