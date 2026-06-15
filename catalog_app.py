@@ -16,10 +16,28 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+import load_csvs
+
 PROJECT_DIR = Path(__file__).resolve().parent
 DB_PATH = PROJECT_DIR / "datadesk.db"
 DOCS_DIR = PROJECT_DIR / "docs"
 SAMPLE_ROWS = 100
+
+
+# --- Database bootstrap -----------------------------------------------------
+
+@st.cache_resource(show_spinner="Building database from CSV files…")
+def ensure_database() -> str:
+    """Rebuild datadesk.db from the committed CSVs if it isn't present.
+
+    Streamlit Community Cloud clones the repo fresh and datadesk.db is
+    gitignored, so the database won't exist on first run. We rebuild it from the
+    committed CSV files via load_csvs.build_database(). Cached as a resource so
+    it runs once per container, not on every rerun.
+    """
+    if not DB_PATH.exists():
+        load_csvs.build_database(DB_PATH)
+    return str(DB_PATH)
 
 
 # --- Data access -----------------------------------------------------------
@@ -75,10 +93,15 @@ def doc_for(table: str) -> str | None:
 st.set_page_config(page_title="Data Catalog", page_icon="📊", layout="wide")
 st.title("📊 Data Catalog")
 
-if not DB_PATH.exists():
+# Build the database from the committed CSVs if it isn't already present
+# (e.g. on a fresh Streamlit Community Cloud deploy).
+try:
+    ensure_database()
+except Exception as exc:  # surface a clear message instead of a raw traceback
     st.error(
-        f"Database not found at `{DB_PATH.name}`. "
-        "Build it first with `python3 load_csvs.py`."
+        f"Could not build the database from the CSV files: {exc}\n\n"
+        "Ensure the source CSVs are present, or build locally with "
+        "`python3 load_csvs.py`."
     )
     st.stop()
 
@@ -92,7 +115,7 @@ st.sidebar.header("Tables")
 overview = pd.DataFrame(
     {"Table": tables, "Rows": [row_count(t) for t in tables]}
 )
-st.sidebar.dataframe(overview, hide_index=True, use_container_width=True)
+st.sidebar.dataframe(overview, hide_index=True, width="stretch")
 selected = st.sidebar.selectbox("Select a table", tables)
 
 st.header(f"`{selected}`")
@@ -102,11 +125,11 @@ tab_schema, tab_sample, tab_docs = st.tabs(["Columns", "Sample rows", "Documenta
 
 with tab_schema:
     st.subheader("Columns")
-    st.dataframe(columns(selected), hide_index=True, use_container_width=True)
+    st.dataframe(columns(selected), hide_index=True, width="stretch")
 
 with tab_sample:
     st.subheader(f"Sample rows (first {SAMPLE_ROWS})")
-    st.dataframe(sample_rows(selected), hide_index=True, use_container_width=True)
+    st.dataframe(sample_rows(selected), hide_index=True, width="stretch")
 
 with tab_docs:
     doc = doc_for(selected)

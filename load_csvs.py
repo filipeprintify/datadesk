@@ -81,6 +81,27 @@ def load_table(conn: sqlite3.Connection, table: str, csv_path: Path) -> int:
     return len(rows)
 
 
+def build_database(db_path: str | Path = "datadesk.db") -> dict[str, int]:
+    """Build (or rebuild) the SQLite database from the configured CSVs.
+
+    Drops and recreates every table in TABLES from its source CSV. Returns a
+    mapping of table name -> row count loaded. Importable so other code (e.g. a
+    Streamlit app) can rebuild the database on startup without shelling out.
+    """
+    db_path = Path(db_path)
+    if not db_path.is_absolute():
+        db_path = (PROJECT_DIR / db_path).resolve()
+
+    conn = sqlite3.connect(db_path)
+    counts: dict[str, int] = {}
+    try:
+        for table, csv_name in TABLES.items():
+            counts[table] = load_table(conn, table, PROJECT_DIR / csv_name)
+    finally:
+        conn.close()
+    return counts
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -91,14 +112,15 @@ def main() -> None:
     args = parser.parse_args()
 
     db_path = (PROJECT_DIR / args.db).resolve()
+    print(f"Loading into {db_path}")
+    counts = build_database(db_path)
+
+    # Confirm by counting straight from the database.
     conn = sqlite3.connect(db_path)
     try:
-        print(f"Loading into {db_path}")
         for table, csv_name in TABLES.items():
-            count = load_table(conn, table, PROJECT_DIR / csv_name)
-            # Confirm by counting straight from the database.
             verified = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
-            status = "ok" if verified == count else "MISMATCH"
+            status = "ok" if verified == counts[table] else "MISMATCH"
             print(f"  {table:<12} <- {csv_name:<16} {verified} rows [{status}]")
     finally:
         conn.close()
