@@ -6,3 +6,6 @@ datadesk.db
 
 # Python virtual environment — recreate with `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
 .venv/
+
+# Python bytecode cache
+__pycache__/
