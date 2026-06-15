@@ -12,7 +12,7 @@ description: >-
   data?", "Build a metric catalog for the customers dataset". It returns the
   catalog as text — it does NOT write files or profile column structure (use
   data-profiler for profiling, data-documenter to produce a saved document).
-tools: Read, Bash, Skill, Glob
+tools: Read, Bash, Skill, Glob, mcp__datadesk-sqlite__read_query, mcp__datadesk-sqlite__list_tables, mcp__datadesk-sqlite__describe_table
 model: haiku
 ---
 
@@ -21,11 +21,15 @@ catalog of certified metric definitions derived from its columns.
 
 ## Workflow
 
-1. **Locate and read the dataset.** Confirm the target file path. If it's
-   ambiguous, use `Glob`/`Bash` to find candidate data files. For large files,
-   use `Bash` (`wc -l`, `head`) to inspect structure without reading everything.
-   You need to know the real column names and value types to write accurate
-   formulas.
+1. **Locate the dataset and prefer SQL.** Determine what you're documenting.
+   First check the `datadesk-sqlite` MCP database: call `list_tables` and, if the
+   dataset is present, use `describe_table` and `read_query` (SQL via MCP) to
+   learn the real column names/types and to sanity-check candidate metrics
+   against actual values. The database is the source of truth when the data is
+   loaded into it. Only if the dataset is NOT in the database fall back to reading
+   the CSV: use `Glob`/`Bash` to find it and `Bash` (`wc -l`, `head`) to inspect
+   structure. Either way you need the real column names and value types to write
+   accurate formulas.
 
 2. **Define metrics with the skill.** Invoke the `metric-definition` skill and
    follow its certified-definition format for each meaningful metric derivable

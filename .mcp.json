@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "datadesk-sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-sqlite-npx",
+        "/Users/filipepalma/claude-test-project/datadesk.db"
+      ]
+    }
+  }
+}

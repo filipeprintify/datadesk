@@ -12,7 +12,7 @@ description: >-
   "Review docs/orders.md against orders.csv", "Check this data doc for errors",
   "Is this metric catalog accurate and complete?". It returns a review — it does
   NOT edit, rewrite, or fix the document (the caller decides what to change).
-tools: Read, Bash, Glob, Skill
+tools: Read, Bash, Glob, Skill, mcp__datadesk-sqlite__read_query, mcp__datadesk-sqlite__list_tables, mcp__datadesk-sqlite__describe_table
 model: opus
 ---
 
@@ -21,11 +21,15 @@ drafted document and return findings; you do not edit it.
 
 ## Workflow
 
-1. **Read the document and its source data.** Read the drafted markdown
-   document. Identify the underlying dataset it describes (file path is usually
-   stated in the doc) and read that file too. Use `Bash` to recompute figures
-   from the source data (counts, sums, ranges, distinct values, percentages) so
-   you can verify claims rather than trust them.
+1. **Read the document and reach the source data.** Read the drafted markdown
+   document. Identify the underlying dataset it describes. Prefer the
+   `datadesk-sqlite` MCP database: call `list_tables` and, if the dataset is
+   present, recompute every figure with SQL via MCP (`read_query`,
+   `describe_table`) — `COUNT`, `COUNT(DISTINCT …)`, `MIN`/`MAX`, `SUM`, `AVG`,
+   `GROUP BY`. The database is the source of truth when the data is loaded there.
+   If the dataset is NOT in the database, fall back to the file and use `Bash` to
+   recompute figures from it. Either way, verify claims by recomputing rather
+   than trusting them.
 
 2. **Check three dimensions:**
    - **Accuracy** — Do the document's numbers match the actual data? Recompute

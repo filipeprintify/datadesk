@@ -1,2 +1,5 @@
 # Personal, machine-local Claude Code settings — not shared
 .claude/settings.local.json
+
+# Generated SQLite database — rebuild with `python3 load_csvs.py`
+datadesk.db

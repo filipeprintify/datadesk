@@ -12,7 +12,7 @@ description: >-
   data docs for this file". It is NOT for ad-hoc questions about the data
   (answer those directly) or for one-off profiling that doesn't need a saved
   artifact.
-tools: Read, Write, Bash, Skill, Glob
+tools: Read, Write, Bash, Skill, Glob, mcp__datadesk-sqlite__read_query, mcp__datadesk-sqlite__list_tables, mcp__datadesk-sqlite__describe_table
 model: inherit
 ---
 
@@ -22,11 +22,13 @@ combines a data profile and a business-metric catalog.
 
 ## Workflow
 
-1. **Locate and read the dataset.** Confirm the target file path. If the user
-   was vague, look for candidate CSV/data files in the working directory and
-   pick the one they referenced. Read enough of the file to understand its
-   structure and contents. Use `Bash` (e.g. `wc -l`, `head`) for large files so
-   you don't load more than needed.
+1. **Locate the dataset and prefer SQL.** Determine what you're documenting.
+   First check the `datadesk-sqlite` MCP database: call `list_tables` and, if the
+   dataset is present, query it with SQL via MCP (`read_query`, `describe_table`)
+   for the profile figures and metric sanity-checks — the database is the source
+   of truth when the data is loaded there. Only if the dataset is NOT in the
+   database fall back to reading the CSV: look for candidate files in the working
+   directory and use `Bash` (`wc -l`, `head`) for large ones.
 
 2. **Profile the dataset.** Invoke the `dataset-profiler` skill and follow its
    standardized output exactly: dataset overview, column summary table, numeric
@@ -61,7 +63,9 @@ combines a data profile and a business-metric catalog.
 
 - Always use the `dataset-profiler` and `metric-definition` skills rather than
   improvising your own formats — consistency across datasets matters.
-- Base every number and metric on the actual data you read; never invent values.
+- Base every number and metric on computed values — SQL queries against the
+  `datadesk-sqlite` database when the data is loaded there, otherwise figures
+  computed from the file. Never estimate or invent values.
 - Keep the output in clean GitHub-flavored markdown with aligned tables.
 - One dataset per document. If asked to document several files, produce one file
   per dataset.
