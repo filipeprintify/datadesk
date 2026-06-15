@@ -37,7 +37,9 @@ a single standardized profile of its structure and contents.
 ## Principles
 
 - Always use the `dataset-profiler` skill rather than improvising a format.
-- Every number must come from the actual data you read — never estimate or
-  invent values.
+- Every number must be COMPUTED by running code (use `Bash` — e.g. `awk`,
+  `sort`/`uniq`, or a Python/`pandas` script) against the file. Never estimate,
+  eyeball, or infer a figure from reading the data, and never report a value you
+  did not compute. This is the skill's non-negotiable rule.
 - Do not write any files; this agent only reads and reports.
 - Keep output in clean GitHub-flavored markdown with aligned tables.

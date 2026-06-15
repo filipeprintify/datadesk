@@ -4,6 +4,20 @@
 
 This skill produces a standardized profile for datasets and CSV files. Use this skill whenever the user asks to "profile", "summarize", "describe", or "analyze" a dataset, data file, or CSV.
 
+## Non-Negotiable Rule: Compute, Never Estimate
+
+**Every figure in the profile MUST be computed by running actual code against the file. Never estimate, eyeball, or infer a number from reading the data.**
+
+This applies to all of: row counts, column counts, missing/null counts, unique/distinct counts, minimums, maximums, sums, averages, medians, category counts, and percentages.
+
+- Run real code (e.g. a Bash one-liner, an `awk`/`sort`/`uniq` pipeline, or a Python/`pandas` script) against the file to derive each value.
+- Report ONLY values that came back from that code. If a number was not computed, it does not go in the profile.
+- Percentages must be calculated from the computed counts, not approximated.
+- Never sample the first N rows and extrapolate to the whole file — every count, sum, and breakdown must reflect the complete dataset.
+- If you cannot execute code against the file for some reason, STOP and say so explicitly. Do not fill in estimated or placeholder figures.
+
+Estimating from a visual scan of the data is the primary cause of profiling errors (wrong counts, percentages that don't sum to 100%) and is strictly prohibited.
+
 ## Trigger Phrases
 
 Activate this skill when the user says things like:
@@ -17,7 +31,7 @@ Activate this skill when the user says things like:
 
 ## Instructions
 
-When profiling a dataset, always produce the following standardized output:
+When profiling a dataset, always produce the following standardized output. Per the **Non-Negotiable Rule** above, every count, percentage, unique value, range, sum, average, and breakdown below must be produced by running code against the file — report only computed values, never estimates.
 
 ### 1. Dataset Overview
 State the total number of rows (excluding header) and columns.
