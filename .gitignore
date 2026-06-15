@@ -9,3 +9,6 @@ datadesk.db
 
 # Python bytecode cache
 __pycache__/
+
+# macOS clutter
+.DS_Store
