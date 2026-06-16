@@ -12,3 +12,6 @@ __pycache__/
 
 # macOS clutter
 .DS_Store
+
+# Agent trace logs — local observability output
+traces/
