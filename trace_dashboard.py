@@ -16,7 +16,19 @@ from pathlib import Path
 import streamlit as st
 
 PROJECT_DIR = Path(__file__).resolve().parent
-TRACE_PATH = PROJECT_DIR / "traces" / "agent-runs.jsonl"
+# Prefer the live local trace (gitignored); fall back to the committed sample so
+# the dashboard has something to show on Streamlit Cloud, where the live file
+# doesn't exist.
+LIVE_PATH = PROJECT_DIR / "traces" / "agent-runs.jsonl"
+SAMPLE_PATH = PROJECT_DIR / "traces_sample.jsonl"
+
+
+def resolve_source() -> tuple[Path | None, str]:
+    if LIVE_PATH.exists() and LIVE_PATH.stat().st_size > 0:
+        return LIVE_PATH, "live"
+    if SAMPLE_PATH.exists() and SAMPLE_PATH.stat().st_size > 0:
+        return SAMPLE_PATH, "sample"
+    return None, "none"
 
 
 # --- Data loading ----------------------------------------------------------
@@ -98,17 +110,25 @@ def result_preview(rec: dict, limit: int = 140) -> str:
 st.set_page_config(page_title="Agent Trace Dashboard", page_icon="🛰️", layout="wide")
 st.title("🛰️ Agent Trace Dashboard")
 
-if not TRACE_PATH.exists():
+source_path, source_kind = resolve_source()
+if source_path is None:
     st.warning(
-        f"No trace file at `traces/{TRACE_PATH.name}` yet. "
-        "It is created by the PostToolUse/SubagentStop hooks once agents run."
+        "No trace data found. The live trace `traces/agent-runs.jsonl` is created "
+        "by the PostToolUse/SubagentStop hooks once agents run, and a committed "
+        "`traces_sample.jsonl` provides demo data on deploys."
     )
     st.stop()
 
-runs = load_runs(str(TRACE_PATH), TRACE_PATH.stat().st_mtime)
+runs = load_runs(str(source_path), source_path.stat().st_mtime)
 if not runs:
     st.info("Trace file is empty — run an agent or tool and refresh.")
     st.stop()
+
+if source_kind == "sample":
+    st.info(
+        "Showing the committed **sample** trace (`traces_sample.jsonl`) — no live "
+        "`traces/agent-runs.jsonl` present. On your machine, the live trace is used automatically."
+    )
 
 # Pre-compute derived fields once.
 for r in runs:
